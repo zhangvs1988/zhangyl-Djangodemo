@@ -1,0 +1,82 @@
+{%extends "base.html"%}
+{%block content%}
+<div class="col-xs-12 col-md-10">
+	
+		<ol class="breadcrumb">
+			<li><a href="/">首页</a></li>
+			<li class="active">{{b.name}}</li>
+		</ol>
+	<div>
+
+
+		<div>
+			<a href="/article/create/{{b.id}}" class="btn btn-primary">发表文章</a>
+			<br />
+			<br />
+		</div>
+	</div>
+	<div>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>标题</th>
+					<th>作者</th>
+					<th>内容</th>
+					<th>创建时间</th>
+					<th>最后更新时间</th>
+				</tr>
+			</thead>
+			<tbody>
+				{%for article in articles%}
+				<tr>
+					<td>{{article.title}}</td>
+					<td>
+						zhangyl
+					</td>
+					<td>{{article.content_1}}</td>
+					<td>{{article.creat_timestamp|date:"Y-m-d P"}}</td>
+					<td>{{article.last_update_timestamp|date:"Y-m-d P"}}</td>
+				</tr>
+				{%endfor%}
+			</tbody>
+		</table>
+	</div>
+
+<div>
+		<nav>
+		  <ul class="pagination">
+		    <li>
+		      <a href="#" aria-label="Previous">
+		        <span aria-hidden="true">&laquo;</span>
+		      </a>
+		    </li>
+		    <li><a href="#">1</a></li>
+		    <li><a href="#">2</a></li>
+		    <li><a href="#">3</a></li>
+		    <li><a href="#">4</a></li>
+		    <li><a href="#">5</a></li>
+		    <li>
+		      <a href="#" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		      </a>
+		    </li>
+		    <li>
+		      <a href="#" aria-label="Next">
+		        <span aria-hidden="true">
+		        	尾页
+		        </span>
+		      </a>
+		    </li>
+		  </ul>
+		</nav>
+	</div>
+
+
+</div>
+
+
+<div class="col-xs-12 col-md-2">
+	<div class="well">个人中心</div>
+</div>
+
+{%endblock%}
