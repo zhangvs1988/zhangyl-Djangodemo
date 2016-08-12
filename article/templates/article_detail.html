@@ -1,0 +1,35 @@
+{%extends "base.html"%}
+{%block content%}
+<div class="col-xs-12 col-md-10">
+	<ol class="breadcrumb">
+		<li><a href="/">首页</a></li>
+		<li ><a href="/article/list/{{a.block.id}}">{{a.block.name}}</a></li>
+		<li class="active">{{ a.title }}</li>
+	</ol>
+</div>	
+<div class="col-xs-12 col-md-2">
+	<div class="well">个人中心</div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <table class="table table-bordered mainTable">
+      <tr>
+       </td>
+        <td class="content">
+          <h6>发表于：{{a.creat_timestamp|date:"Y-m-d P"}}</h6>
+          <h4>标题：{{a.title}}</h4>
+        
+          <div> {{a.content}} </div>
+         
+        </td>
+      </tr>
+     
+    </table>
+
+</div>
+	
+</div>
+
+
+{%endblock%}
