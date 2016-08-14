@@ -1,8 +1,13 @@
-from django.shortcuts import render
-from block.models import Block
+
+import datetime
+import uuid
+
+from django.core.mail import send_mail
 from django.contrib.auth.models import User
-
-
+from django.shortcuts import render
+from django.utils import timezone
+from usercenter.models import ActivateCode
+from block.models import Block
 
 
 def index(request):
@@ -28,8 +33,22 @@ def register(request):
         if not error:
             user = User.objects.create_user(username=username, email=email, password=password)
             user.save()
+
+            new_code = str(uuid.uuid4()).replace("-", "")
+            expire_time = timezone.now() + datetime.timedelta(days=2)
+            code_record = ActivateCode(owner=user, code=new_code, expire_timestamp=expire_time)
+            code_record.save()
+
+            activate_link = "http://%s/activate/%s" % (request.get_host(), new_code)
+            activate_email = '''点击<a href="%s">这里</a>激活''' % activate_link
+            send_mail(subject='[Python部落论坛]激活邮件',
+                      message='点击链接激活: %s' % activate_link,
+                      html_message=activate_email,
+                      from_email='343494173@qq.com',
+                      recipient_list=[email],
+                      fail_silently=False)
         else:
             return render(request, "register.html", {"error": error})
-        return render(request, "regist_success.html", )
+        return render(request, "regist_success.html", {"msg": "注册成功，激活邮件已经发送到您的邮箱，请点击邮箱中的激活链接完成激活。"})
 
 
