@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.utils import timezone
-from usercenter.models import ActivateCode
+from usercenter.models import ActivateCode,UserProfile
 from block.models import Block
 
 
@@ -32,7 +32,10 @@ def register(request):
             error = "用户已存在"
         if not error:
             user = User.objects.create_user(username=username, email=email, password=password)
+            user.is_active = False
             user.save()
+            profile = UserProfile(user=user)
+            profile.save()
 
             new_code = str(uuid.uuid4()).replace("-", "")
             expire_time = timezone.now() + datetime.timedelta(days=2)
